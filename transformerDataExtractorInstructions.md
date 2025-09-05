@@ -17,9 +17,9 @@ This will get things setup to be able to submit extraction of the near detector 
 ```bash
 source /cvmfs/nova.opensciencegrid.org/novasoft/slf7/novasoft/setup/setup_nova.sh
 spack load nova-grid-utils
-mkdir /exp/nova/app/users/$USER
 cd /exp/nova/app/users/$USER
-git lfs install --skip-repo
+mkdir transformer7
+cd transformer7
 sl7-nova
 source /cvmfs/nova.opensciencegrid.org/novasoft/slf7/novasoft/setup/setup_nova.sh
 newrel -t development transformerEE_data_extract
@@ -30,17 +30,18 @@ novasoft_build -t
 cd ../
 tar czf transformerEE_data_extract.tar.gz ./transformerEE_data_extract
 cp /pnfs/nova/persistent/users/wus/transformeree_data_script/mprod6.1_OPAL/mprod6_exporter_transformer_ee_nd_fhc_nonswap.C .
-mkdir nd_fhc_data
-chmod g+w ./nd_fhc_data/
+mkdir -p /pnfs/nova/scratch/users/oneogi/transformer7/nd_fhc_data
+chmod g+w /pnfs/nova/scratch/users/oneogi/transformer7/nd_fhc_data
 exit
+setup_fnal_security
 ```
 
 To actually submit the job, the following code can be run.
 It is split into multiple lines for visibility but the entire block should be copied at once unlike the last block where each command is to be run one at a time.
 
-```bash
+ ```bash
 submit_cafana.py -n 250 --print_jobsub \
---rel development -o ./nd_fhc_data \
+--rel development -o /pnfs/nova/scratch/users/oneogi/transformer7/nd_fhc_data \
 --user_tarball ./transformerEE_data_extract.tar.gz \
 ./mprod6_exporter_transformer_ee_nd_fhc_nonswap.C
 ```
@@ -234,13 +235,13 @@ exit
 If the security token is expired, it can be refreshed with 
 
 ```bash
-setup_fnal_securitysimple.cmd   [DONE]  after 0s
+setup_fnal_security
 ```
 
 The general syntax  for running these macros over the grid is
 
 ```bash
-$ submit_cafana.py -n <NUMBER_OF_JOBS> --print_jobsub \
+submit_cafana.py -n <NUMBER_OF_JOBS> --print_jobsub \
 --rel development -o <OUT_DIR> \
 --user_tarball <PATH_TO_TARBALL> \
 <MACRO_PATH>
@@ -257,15 +258,15 @@ For the purposes of our example, this can be accomplished by
 
 ```bash
 submit_cafana.py -n 250 --print_jobsub \
---rel development -o ./nd_fhc_data \
---user_tarball ./transformerEE_data_extract.tar.gz \
-./mprod6_exporter_transformer_ee_nd_fhc_nonswap.C
+--rel development -o nd_fhc_data \
+--user_tarball transformerEE_data_extract.tar.gz \
+mprod6_exporter_transformer_ee_nd_fhc_nonswap.C
 ```
 
 ### Getting job logs
 
 ```bash
-jobsub_fetchlog --jobid=64925857.0@jobsub03.fnal.gov --unzipdir=./jobLogs
+jobsub_fetchlog --jobid=79571052.0@jobsub01.fnal.gov --unzipdir=./jobLogs
 ```
 
 ```bash
