@@ -12,6 +12,7 @@ The following commands typed into the terminal should get things up and running,
 ```bash
 source /cvmfs/nova.opensciencegrid.org/novasoft/slf7/novasoft/setup/setup_nova.sh
 spack load nova-grid-utils
+setup_fnal_security
 sl7-nova
 source /cvmfs/nova.opensciencegrid.org/novasoft/slf7/novasoft/setup/setup_nova.sh
 mkdir /exp/nova/app/users/$USER
