@@ -32,6 +32,27 @@ source cafe_run.sh
 assuming everything works, there should be some plots created in 
 `/exp/nova/app/users/$USER/magneticMoment/plotsNormalized`
 
+In order to run over the entire dataset over the grid, after the tests above have been succesfully conducted, the following steps can be taken.
+
+```bash
+tar czf ../magneticMoment.tar.gz .
+cd ../
+mkdir -p /pnfs/nova/scratch/users/$USER/spectra_event_selection
+chmod g+w /pnfs/nova/scratch/users/$USER/spectra_event_selection
+exit
+```
+
+To actually submit the job, the following code can be run.
+It is split into multiple lines for visibility but the entire block should be copied at once unlike the last block where each command is to be run one at a time.
+
+ ```bash
+submit_cafana.py -n 250 --print_jobsub \
+--rel development -o /pnfs/nova/scratch/users/$USER/spectra_event_selection \
+--user_tarball ./magneticMoment.tar.gz \
+-ss --ndid --numubarccinc --lib NuMagMomentAnaCuts --lib NuMagMomentAnaVars --lib NuMagMomentAnaSysts --lib NuMagMomentAnaPrediction --lib NuMagMomentAnaOscCalc \
+./magneticMoment/NuMagMomentAna/NuMMAnalysis/EventSelection/make_spectra_event_selection.C
+```
+
 The more detailed guide that follows explains what each of the above lines do.
 
 ### Ssh into novagpvm
@@ -186,6 +207,16 @@ Once the directory is created, the files can be run using
 
 ```bash
 source cafe_run.sh
+```
+
+### Getting job logs
+
+```bash
+jobsub_fetchlog --jobid=job id 24399898.0@jobsub05.fnal.gov --unzipdir=./jobLogs
+```
+
+```bash
+jobsub_q --user=oneogi
 ```
 
 
