@@ -21,9 +21,10 @@ git lfs install --skip-repo
 newrel -t development magneticMoment
 cd magneticMoment
 srt_setup -a 
-addpkg_git -h NuMagMomentAna
+addpkg_git -h -t NuMagMomentAna
 novasoft_build -t
 cp -r /exp/nova/app/users/oneogi/magmomentana_files/* .
+srt_setup -a 
 novasoft_build -t
 mkdir plotsNormalized
 source cafe_run.sh
@@ -57,9 +58,9 @@ submit_cafana.py -n 250 --print_jobsub \
 --user_tarball ./magneticMoment.tar.gz \
 -i /pnfs/nova/scratch/users/$USER/make_spectra_headers/constants.h -i /pnfs/nova/scratch/users/$USER/make_spectra_headers/NuMMCuts.h -i /pnfs/nova/scratch/users/$USER/make_spectra_headers/NuoneCuts.h -i /pnfs/nova/scratch/users/$USER/make_spectra_headers/NuoneHistAxis.h -i /pnfs/nova/scratch/users/$USER/make_spectra_headers/NuoneVars.h -i /pnfs/nova/scratch/users/$USER/make_spectra_headers/NuoneWeights.h \
 -i /pnfs/nova/scratch/users/$USER/prediction_headers/LDMSysts.h -i /pnfs/nova/scratch/users/$USER/prediction_headers/NDPredictionSingleElectron.h -i /pnfs/nova/scratch/users/$USER/prediction_headers/OscCalcSingleElectron.h \
--i /pnfs/nova/scratch/users/$USER/master_header.h
+-i /pnfs/nova/scratch/users/$USER/master_header.h \
 -ss --ndid --numubarccinc \
---lib NuMagMomentAnaCuts --lib NuMagMomentAnaVars --lib NuMagMomentAnaPrediction --lib NuMagMomentAnaSysts \
+--lib NuMagMomentAnaCuts --lib NuMagMomentAnaVars --lib NuMagMomentAnaPrediction --lib NuMagMomentAnaSysts --lib NuMagMomentAnaOscCalc \
 /pnfs/nova/scratch/users/$USER/make_spectra_event_selection.C
 ```
 
@@ -222,7 +223,7 @@ source cafe_run.sh
 ### Getting job logs
 
 ```bash
-jobsub_fetchlog --jobid=24480592.0@jobsub05.fnal.gov --unzipdir=./jobLogs
+jobsub_fetchlog --jobid=80882072.0@jobsub01.fnal.gov --unzipdir=./jobLogs
 ```
 
 ```bash
