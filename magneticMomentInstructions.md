@@ -36,7 +36,7 @@ assuming everything works, there should be some plots created in
 In order to run over the entire dataset over the grid, after the tests above have been succesfully conducted, the following steps can be taken.
 
 ```bash
-tar czf ../magneticMoment.tar.gz .
+testrel_tarball . ../magneticMoment
 cd ../
 mkdir -p /pnfs/nova/scratch/users/$USER/spectra_event_selection
 chmod g+w /pnfs/nova/scratch/users/$USER/spectra_event_selection
@@ -55,7 +55,7 @@ It is split into multiple lines for visibility but the entire block should be co
  ```bash
 submit_cafana.py -n 250 --print_jobsub \
 --rel development -o /pnfs/nova/scratch/users/$USER/spectra_event_selection \
---user_tarball ./magneticMoment.tar.gz \
+--user_tarball ./magneticMoment.tar.bz2 \
 -i /pnfs/nova/scratch/users/$USER/make_spectra_headers/constants.h -i /pnfs/nova/scratch/users/$USER/make_spectra_headers/NuMMCuts.h -i /pnfs/nova/scratch/users/$USER/make_spectra_headers/NuoneCuts.h -i /pnfs/nova/scratch/users/$USER/make_spectra_headers/NuoneHistAxis.h -i /pnfs/nova/scratch/users/$USER/make_spectra_headers/NuoneVars.h -i /pnfs/nova/scratch/users/$USER/make_spectra_headers/NuoneWeights.h \
 -i /pnfs/nova/scratch/users/$USER/prediction_headers/LDMSysts.h -i /pnfs/nova/scratch/users/$USER/prediction_headers/NDPredictionSingleElectron.h -i /pnfs/nova/scratch/users/$USER/prediction_headers/OscCalcSingleElectron.h \
 -i /pnfs/nova/scratch/users/$USER/master_header.h \
@@ -223,7 +223,7 @@ source cafe_run.sh
 ### Getting job logs
 
 ```bash
-jobsub_fetchlog --jobid=80882072.0@jobsub01.fnal.gov --unzipdir=./jobLogs
+jobsub_fetchlog --jobid=87799120.0@jobsub02.fnal.gov --unzipdir=./jobLogs
 ```
 
 ```bash
