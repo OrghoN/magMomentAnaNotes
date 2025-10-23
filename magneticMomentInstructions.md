@@ -41,6 +41,7 @@ mkdir -p /pnfs/nova/scratch/users/$USER/spectra_event_selection
 chmod g+w /pnfs/nova/scratch/users/$USER/spectra_event_selection
 cd /pnfs/nova/scratch/users/$USER
 cp /exp/nova/app/users/$USER/magneticMoment/NuMagMomentAna/NuMMAnalysis/EventSelection/make_spectra_event_selection.C .
+cp /exp/nova/app/users/$USER/magneticMoment/NuMagMomentAna/NuMMAnalysis/master_header.h .
 cp -r /exp/nova/app/users/oneogi/make_spectra_headers .
 cp -r /exp/nova/app/users/oneogi/prediction_headers .
 cd /exp/nova/app/users/$USER
@@ -56,6 +57,7 @@ submit_cafana.py -n 250 --print_jobsub \
 --user_tarball ./magneticMoment.tar.gz \
 -i /pnfs/nova/scratch/users/$USER/make_spectra_headers/constants.h -i /pnfs/nova/scratch/users/$USER/make_spectra_headers/NuMMCuts.h -i /pnfs/nova/scratch/users/$USER/make_spectra_headers/NuoneCuts.h -i /pnfs/nova/scratch/users/$USER/make_spectra_headers/NuoneHistAxis.h -i /pnfs/nova/scratch/users/$USER/make_spectra_headers/NuoneVars.h -i /pnfs/nova/scratch/users/$USER/make_spectra_headers/NuoneWeights.h \
 -i /pnfs/nova/scratch/users/$USER/prediction_headers/LDMSysts.h -i /pnfs/nova/scratch/users/$USER/prediction_headers/NDPredictionSingleElectron.h -i /pnfs/nova/scratch/users/$USER/prediction_headers/OscCalcSingleElectron.h \
+-i /pnfs/nova/scratch/users/$USER/master_header.h
 -ss --ndid --numubarccinc \
 --lib NuMagMomentAnaCuts --lib NuMagMomentAnaVars --lib NuMagMomentAnaPrediction --lib NuMagMomentAnaSysts \
 /pnfs/nova/scratch/users/$USER/make_spectra_event_selection.C
