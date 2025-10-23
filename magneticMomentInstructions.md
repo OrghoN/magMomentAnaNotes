@@ -39,6 +39,10 @@ tar czf ../magneticMoment.tar.gz .
 cd ../
 mkdir -p /pnfs/nova/scratch/users/$USER/spectra_event_selection
 chmod g+w /pnfs/nova/scratch/users/$USER/spectra_event_selection
+cd /pnfs/nova/scratch/users/$USER
+cp -r /exp/nova/app/users/oneogi/make_spectra_headers .
+cp -r /exp/nova/app/users/oneogi/prediction_headers .
+cd /exp/nova/app/users/$USER
 exit
 ```
 
@@ -49,8 +53,11 @@ It is split into multiple lines for visibility but the entire block should be co
 submit_cafana.py -n 250 --print_jobsub \
 --rel development -o /pnfs/nova/scratch/users/$USER/spectra_event_selection \
 --user_tarball ./magneticMoment.tar.gz \
--ss --ndid --numubarccinc --lib NuMagMomentAnaCuts --lib NuMagMomentAnaVars --lib NuMagMomentAnaSysts --lib NuMagMomentAnaPrediction --lib NuMagMomentAnaOscCalc \
-./magneticMoment/NuMagMomentAna/NuMMAnalysis/EventSelection/make_spectra_event_selection.C
+-i /pnfs/nova/scratch/users/$USER/make_spectra_headers/constants.h -i /pnfs/nova/scratch/users/$USER/make_spectra_headers/NuMMCuts.h -i /pnfs/nova/scratch/users/$USER/make_spectra_headers/NuoneCuts.h -i /pnfs/nova/scratch/users/$USER/make_spectra_headers/NuoneHistAxis.h -i /pnfs/nova/scratch/users/$USER/make_spectra_headers/NuoneVars.h -i /pnfs/nova/scratch/users/$USER/make_spectra_headers/NuoneWeights.h \
+-i /pnfs/nova/scratch/users/$USER/prediction_headers/LDMSysts.h -i /pnfs/nova/scratch/users/$USER/prediction_headers/NDPredictionSingleElectron.h -i /pnfs/nova/scratch/users/$USER/prediction_headers/OscCalcSingleElectron.h \
+-ss --ndid --numubarccinc \
+--lib NuMagMomentAnaCuts --lib NuMagMomentAnaVars --lib NuMagMomentAnaSysts --lib NuMagMomentAnaPrediction --lib NuMagMomentAnaOscCalc \
+/pnfs/nova/scratch/users/$USER/make_spectra_event_selection.C
 ```
 
 The more detailed guide that follows explains what each of the above lines do.
@@ -212,18 +219,9 @@ source cafe_run.sh
 ### Getting job logs
 
 ```bash
-jobsub_fetchlog --jobid=job id 24399898.0@jobsub05.fnal.gov --unzipdir=./jobLogs
+jobsub_fetchlog --jobid=87795534.0@jobsub02.fnal.gov --unzipdir=./jobLogs
 ```
 
 ```bash
 jobsub_q --user=oneogi
 ```
-
-
-
-
-
-
-
-
-
