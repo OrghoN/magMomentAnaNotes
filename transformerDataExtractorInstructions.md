@@ -25,11 +25,12 @@ source /cvmfs/nova.opensciencegrid.org/novasoft/slf7/novasoft/setup/setup_nova.s
 newrel -t development transformerEE_data_extract
 cd transformerEE_data_extract
 git checkout feature/wus_transformerEE_data_extract
+cp -r /exp/nova/app/users/oneogi/transformeree_data_script/ .
 srt_setup -a
 novasoft_build -t
-tar czf ../transformerEE_data_extract.tar.gz .
+testrel_tarball . ../transformerEE_data_extract
 cd ../
-cp /pnfs/nova/persistent/users/wus/transformeree_data_script/mprod6.1_OPAL/mprod6_exporter_transformer_ee_nd_fhc_nonswap.C .
+cp /exp/nova/app/users/oneogi/transformeree_data_script/mprod6.1_OPAL/mprod6_exporter_transformer_ee_nd_fhc_nonswap.C /pnfs/nova/scratch/users/$USER/mprod6_exporter_transformer_ee_nd_fhc_nonswap.C
 mkdir -p /pnfs/nova/scratch/users/$USER/transformer/nd_fhc_data
 chmod g+w /pnfs/nova/scratch/users/$USER/transformer/nd_fhc_data
 exit
@@ -42,8 +43,8 @@ It is split into multiple lines for visibility but the entire block should be co
  ```bash
 submit_cafana.py -n 250 --print_jobsub \
 --rel development -o /pnfs/nova/scratch/users/$USER/transformer/nd_fhc_data \
---user_tarball ./transformerEE_data_extract.tar.gz \
-./mprod6_exporter_transformer_ee_nd_fhc_nonswap.C
+--user_tarball ./transformerEE_data_extract.tar.bz2 \
+/pnfs/nova/scratch/users/$USER/mprod6_exporter_transformer_ee_nd_fhc_nonswap.C
 ```
 
 Once the jobs finish, you can merge the output csv files by the following commands
