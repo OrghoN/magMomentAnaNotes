@@ -276,7 +276,7 @@ mprod6_exporter_transformer_ee_nd_fhc_nonswap.C
 ### Getting job logs
 
 ```bash
-jobsub_fetchlog --jobid=79571147.0@jobsub01.fnal.gov --unzipdir=./jobLogs
+jobsub_fetchlog --jobid=24447570.0@jobsub04.fnal.gov --unzipdir=./jobLogs
 ```
 
 ```bash
