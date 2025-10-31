@@ -188,10 +188,12 @@ cd transformer
 
 In the future, the code for extraction will be merged into the main branch  but for now we still need to set up a custom test release.
 
-
 ```bash
 newrel -t development transformerEE_data_extract
 ```
+
+This will setup a new novasoft test release with the name `transformerEE_data_extract`.
+It will do so using the development version of novasoft as the base.
 
 With the new release set up, we can cd into it using 
 
@@ -209,11 +211,21 @@ git checkout feature/wus_transformerEE_data_extract
 
 ### Building the test release
 
+For testing purposes, it might be helpful to copy the macros that we wish to run over to this test release.
+This does not affect submission to the grid.
+If you have no desire to run these macros interactively, it is totally okay to not copy this directory over.
+
+```bash
+cp -r /exp/nova/app/users/oneogi/transformeree_data_script/ .
+```
+
 First, we can run setup using 
 
 ```bash
 srt_setup -a 
 ```
+
+This points the private context of novasoft to the test release you just created. 
 
 Now, we are ready to build our test release.
 This can be done using
