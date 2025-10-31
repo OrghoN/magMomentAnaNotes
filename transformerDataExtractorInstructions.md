@@ -34,6 +34,7 @@ novasoft_build -t
 The ND-FHC macro can then be run interactively over 5 files for testing by using
 
 ```bash
+cafe -bq -l 5 ./transformeree_data_script/mprod6.1_OPAL/mprod6_exporter_transformer_ee_nd_fhc_nonswap.C
 ```
 
 However, to run over the entire dataset, it is recommended to run it over the grid. The following code block shows the setup instructions for that.
@@ -48,7 +49,7 @@ exit
 ```
 
 To actually submit the job, the following code can be run.
-It is split into multiple lines for visibility but the entire block should be copied at once unlike the last block where each command is to be run one at a time.
+It is split into multiple lines for visibility but the entire block should be copied at once unlike the last few blocks where each command is to be run one at a time.
 
  ```bash
 submit_cafana.py -n 250 --print_jobsub \
@@ -62,8 +63,9 @@ Once the jobs finish, you can merge the output csv files by the following comman
 ```bash
 cd /exp/nova/app/users/$USER/transformer
 cp -r /pnfs/nova/scratch/users/$USER/transformer/nd_fhc_data .
-cp /pnfs/nova/persistent/users/wus/transformeree_data_script/mprod6.1_OPAL/merge_csv.sh .
-merge_csv.sh nd_fhc_data.csv.xz nd_fhc_data/dataset_*.csv
+cp /exp/nova/app/users/oneogi/transformeree_data_script/mprod6.1_OPAL/merge_csv.sh .
+chmod +x merge_csv.sh
+./merge_csv.sh nd_fhc_data.csv.xz nd_fhc_data/dataset_*.csv
 ```
 
 The more detailed guide that follows explains what each of the above lines do.
