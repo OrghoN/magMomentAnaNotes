@@ -177,6 +177,15 @@ source /cvmfs/nova.opensciencegrid.org/novasoft/slf7/novasoft/setup/setup_nova.s
 
 ### Setting up new release
 
+I would strongly recommend creating a new directory for organizing the code discussed in this document and then `cd` into it.
+This will keep all the code in a subdirectory instead of pollutin your main working directory.
+This can be done using the following commands assuming you want to call this directory transformer but the actual name doesn't matter, feel free to call it something else.
+
+```bash
+mkdir transformer
+cd transformer
+```
+
 In the future, the code for extraction will be merged into the main branch  but for now we still need to set up a custom test release.
 
 
