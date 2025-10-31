@@ -91,9 +91,14 @@ Now you should be in the novagpvm system.
 The following commands are to be run in novagpvm computers after sshing in unless otherwise stated.
 
 ### Setup novasoft
+First step is to setup novasoft.
 
-First step is to setup novasoft. 
-This instruction needs to be run every time upon login.
+If you have never setup novasoft before, there are some one time things that have to be done.
+Those one time setup instructions are not covered in this document.
+If you have never setup novasoft before, I recommend looking at this [beginner wiki page.](https://cdcvs.fnal.gov/redmine/projects/novaart/wiki/Documentation_FOR_BEGINNERS)
+It has helpful resources, gives a overview of how to work with novasoft and contains the one time setup instructions that need to be run before following the instructions in this document.
+
+The following  instruction needs to be run every time upon login.
 It can also be setup to run automatically upon login by putting it in the `.bashrc`, `.zshrc` or something of the like.
 
 ```bash
