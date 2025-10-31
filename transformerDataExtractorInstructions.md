@@ -20,6 +20,7 @@ spack load nova-grid-utils
 cd /exp/nova/app/users/$USER
 mkdir transformer
 cd transformer
+setup_fnal_security
 sl7-nova
 source /cvmfs/nova.opensciencegrid.org/novasoft/slf7/novasoft/setup/setup_nova.sh
 newrel -t development transformerEE_data_extract
@@ -28,13 +29,22 @@ git checkout feature/wus_transformerEE_data_extract
 cp -r /exp/nova/app/users/oneogi/transformeree_data_script/ .
 srt_setup -a
 novasoft_build -t
+```
+
+The ND-FHC macro can then be run interactively over 5 files for testing by using
+
+```bash
+```
+
+However, to run over the entire dataset, it is recommended to run it over the grid. The following code block shows the setup instructions for that.
+
+```bash
 testrel_tarball . ../transformerEE_data_extract
 cd ../
 cp /exp/nova/app/users/oneogi/transformeree_data_script/mprod6.1_OPAL/mprod6_exporter_transformer_ee_nd_fhc_nonswap.C /pnfs/nova/scratch/users/$USER/mprod6_exporter_transformer_ee_nd_fhc_nonswap.C
 mkdir -p /pnfs/nova/scratch/users/$USER/transformer/nd_fhc_data
 chmod g+w /pnfs/nova/scratch/users/$USER/transformer/nd_fhc_data
 exit
-setup_fnal_security
 ```
 
 To actually submit the job, the following code can be run.
@@ -276,7 +286,7 @@ mprod6_exporter_transformer_ee_nd_fhc_nonswap.C
 ### Getting job logs
 
 ```bash
-jobsub_fetchlog --jobid=24447570.0@jobsub04.fnal.gov --unzipdir=./jobLogs
+jobsub_fetchlog --jobid=87858065.0@jobsub02.fnal.gov --unzipdir=./jobLogs
 ```
 
 ```bash
