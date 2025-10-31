@@ -219,13 +219,14 @@ If you have no desire to run these macros interactively, it is totally okay to n
 cp -r /exp/nova/app/users/oneogi/transformeree_data_script/ .
 ```
 
-First, we can run setup using 
+Then we can run setup using 
 
 ```bash
 srt_setup -a 
 ```
 
-This points the private context of novasoft to the test release you just created. 
+This points the private context of novasoft to the test release you just created.
+The above setup  command needs to be run every time you wish to build the test release or convert it into a tarball.
 
 Now, we are ready to build our test release.
 This can be done using
@@ -235,6 +236,20 @@ novasoft_build -t
 ```
 
 Every time the code is changed, it needs to be rebuilt using the above command.
+
+### Running interactively
+
+It can be helpful to run the macro interactively before sending it to the grid  to make sure things are setup correctly thus far. Running over all the files will take a long time interactively so it is recommended to run over a small number of files. This can be done using the following command.
+
+```bash
+cafe -bq -l 5 ./transformeree_data_script/mprod6.1_OPAL/mprod6_exporter_transformer_ee_nd_fhc_nonswap.C
+```
+
+The `-b` flag indicates that cafe `cafe` is being run in batch mode.
+The `-q` flag tells `cafe` to quit once it has finished running.
+The `-b` and `-q` flags can be combined by calling the `-bq` flag.
+The `-l` flag takes one argument which tells it how many files to run over.
+The above example runs over 5 files.
 
 ### Tarring up the test release
 
