@@ -11,16 +11,20 @@ This assumes that you are working in the novagpvm computers and have already bee
 
 ## Quickstart
 
+The quickstart part of this guide assumes that you have setup novasoft before.
+If you have never setup novasoft before, I recommend looking at this [beginner wiki page.](https://cdcvs.fnal.gov/redmine/projects/novaart/wiki/Documentation_FOR_BEGINNERS)
+It has helpful resources, gives a overview of how to work with novasoft and contains the one time setup instructions that need to be run before following the instructions in this section of the document.
+
 The following commands typed into the terminal should get things up and running, assuming you are okay with the defaults, the following code block should be run once ssh'd into the novagpvm computers.
 This will get things setup to be able to submit extraction of the near detector forward horn current dataset.
 
 ```bash
 source /cvmfs/nova.opensciencegrid.org/novasoft/slf7/novasoft/setup/setup_nova.sh
 spack load nova-grid-utils
+setup_fnal_security
 cd /exp/nova/app/users/$USER
 mkdir transformer
 cd transformer
-setup_fnal_security
 sl7-nova
 source /cvmfs/nova.opensciencegrid.org/novasoft/slf7/novasoft/setup/setup_nova.sh
 newrel -t development transformerEE_data_extract
@@ -91,13 +95,8 @@ Now you should be in the novagpvm system.
 The following commands are to be run in novagpvm computers after sshing in unless otherwise stated.
 
 ### Setup novasoft
+
 First step is to setup novasoft.
-
-If you have never setup novasoft before, there are some one time things that have to be done.
-Those one time setup instructions are not covered in this document.
-If you have never setup novasoft before, I recommend looking at this [beginner wiki page.](https://cdcvs.fnal.gov/redmine/projects/novaart/wiki/Documentation_FOR_BEGINNERS)
-It has helpful resources, gives a overview of how to work with novasoft and contains the one time setup instructions that need to be run before following the instructions in this document.
-
 The following  instruction needs to be run every time upon login.
 It can also be setup to run automatically upon login by putting it in the `.bashrc`, `.zshrc` or something of the like.
 
@@ -105,26 +104,23 @@ It can also be setup to run automatically upon login by putting it in the `.bash
 source /cvmfs/nova.opensciencegrid.org/novasoft/slf7/novasoft/setup/setup_nova.sh
 ```
 
-When novasoft was designed, it was supposed to run on scientific linux 7.
-Now, all the novagpvm's are running alma 9 so we will use a sl7 container to run the code.
+### Setting up grid access
 
-To have access to the sl7 container, we need to load nova grid utils  with 
+We will eventually use the grid and therefore need to load the utility functions for the grid which can be done with 
 
 ```bash
 spack load nova-grid-utils
 ```
 
-With the utilities loaded, the container can be started by running
+With the grid utilities loaded, a token needs to be setup based on  your kerberos ticket for authentication to the grid.
+use `klist` to check if you have a valid ticket and if not, run `kinit -f <kerberos principal>@fnal.gov` as described before.
+If a valid kerberos ticket exists, a token can be generated with
 
 ```bash
-sl7-nova
+setup_fnal_security
 ```
 
-Once in the container, novasoft has to be setup again using
-
-```bash
-source /cvmfs/nova.opensciencegrid.org/novasoft/slf7/novasoft/setup/setup_nova.sh
-```
+This token does expire, so if you are having authentication issues when submitting to the grid or using jobsub in general, it is a good idea to run the above command again to refresh the token.
 
 ### Setup Working Directory
 
@@ -162,6 +158,22 @@ git lfs install --skip-repo
 This initializes Git LFS in your global Git configuration, enabling LFS features across all your repositories while not affecting the configuration of your current repository.
 
 The above command needs to be only run once, no need to run it upon starting every session.
+
+### Accessing sl7 nova container
+
+When novasoft was designed, it was supposed to run on scientific linux.
+Now, all the novagpvm's are running alma 9 so we will use a sl7 container to run the code.
+the container can be started by running
+
+```bash
+sl7-nova
+```
+
+Once in the container, novasoft has to be setup again using
+
+```bash
+source /cvmfs/nova.opensciencegrid.org/novasoft/slf7/novasoft/setup/setup_nova.sh
+```
 
 ### Setting up new release
 
