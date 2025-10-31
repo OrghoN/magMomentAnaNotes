@@ -258,16 +258,19 @@ In order to use our custom test release on the grid,   we need to turn our relea
 the general syntax for doing this is as follows
 
 ```bash
-tar czf <name_of_archive_file>.tar.gz <name_of_directory_to_tar>
-
+testrel_tarball <path_to_test_release> <path_to_tarball>
 ```
+
+Where `<path_to_test_release>` should have the path to the test release you want to convert into a tarball and `<path_to_tarball>` contains the path to the tarball you wish to save.
+It should end with the name of the tarball you wish to create without any extension.
 
 For our example, you can run
 
 ```bash
-cd ../
-tar czf transformerEE_data_extract.tar.gz ./transformerEE_data_extract
+testrel_tarball . ../transformerEE_data_extract
 ```
+
+This will create a file called `transformerEE_data_extract.tar.bz2` in the directory above the test release.
 
 ### Location of Macros
 
