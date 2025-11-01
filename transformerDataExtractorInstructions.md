@@ -301,7 +301,6 @@ A full suite of macros for extracting data for both the near and far detector  c
 /exp/nova/app/users/oneogi/transformeree_data_script
 ```
 
-
 ### Submitting to the grid
 
 Submitting to the grid has to be done outside the singularity container we have been working in so far.
@@ -309,12 +308,6 @@ We can usually exit the container with `Ctrl-d` or by typing the following comma
 
 ```bash
 exit
-```
-
-If the security token is expired, it can be refreshed with 
-
-```bash
-setup_fnal_security
 ```
 
 The general syntax  for running these macros over the grid is
@@ -333,23 +326,39 @@ Where
 - `<PATH_TO_TARBALL>` is to be replaced by path to tarball of test release
 - `<MACRO_PATH>` is to be replaced by the path to the macro you wish to run
 
-For the purposes of our example, this can be accomplished by
+For the purposes of our example, this can be accomplished by running the following block.
+It is split into multiple lines for visibility but the entire block should be copied at once unlike the last few blocks where each command is to be run one at a time.
 
-```bash
+ ```bash
 submit_cafana.py -n 250 --print_jobsub \
---rel development -o nd_fhc_data \
---user_tarball transformerEE_data_extract.tar.gz \
-mprod6_exporter_transformer_ee_nd_fhc_nonswap.C
+--rel development -o /pnfs/nova/scratch/users/$USER/transformer/nd_fhc_data \
+--user_tarball ./transformerEE_data_extract.tar.bz2 \
+/pnfs/nova/scratch/users/$USER/mprod6_exporter_transformer_ee_nd_fhc_nonswap.C
 ```
 
 ### Getting job logs
+
+Once the individual jobs have finished, they will write their logs to the output directory in scratch.
+While the job is running,  the job logs can be obtained by using the following code.
+
+```bash
+jobsub_fetchlog --jobid=<job_id> --unzipdir=<path_to_unzip_directory>
+```
+
+Where `<job_id>` is to be replaced with the job id you get in the `std-out` after submitting the job and the `<path_to_unzip_directory>`  is to be replaced by the path to the directory that you want the job logs to be written to.
+This directory has to be created before you call `jobsub_fetchlog`.
+
+An example of what the command can look like is shown in the following block of code.
+This will not  give you the job logs for the job you submitted but rather one of the old jobs I did, assuming those files still exist.
 
 ```bash
 jobsub_fetchlog --jobid=87925287.0@jobsub02.fnal.gov --unzipdir=./jobLogs
 ```
 
+To get an idea of the status of the jobs, you can run the following
+
 ```bash
-jobsub_q --user=oneogi
+jobsub_q --user=$USER
 ```
 
 
