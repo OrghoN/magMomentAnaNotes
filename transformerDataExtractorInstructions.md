@@ -293,36 +293,14 @@ chmod g+w /pnfs/nova/scratch/users/$USER/transformer/nd_fhc_data
 
 The output directory can be named anything, the above is just an example, just make sure that the directory you create is the same as the one you point to when submitting the job to the grid.
 
-
-
 ### Location of Macros
 
 A full suite of macros for extracting data for both the near and far detector  can be found at
 
 ```bash
-/pnfs/nova/persistent/users/wus/transformeree_data_script/mprod6.1_OPAL
+/exp/nova/app/users/oneogi/transformeree_data_script
 ```
 
-For this example, we will use the macro for the near detector and forward horn current.
-This macro should be copied to the local directory using
-
-```bash
-cp /pnfs/nova/persistent/users/wus/transformeree_data_script/mprod6.1_OPAL/mprod6_exporter_transformer_ee_nd_fhc_nonswap.C .
-```
-
-### Making an output directory
-
-The output from the grid has to be dumped somewhere and so we need to create a directory to hold our outputs. For this example, this can be done with
-
-```bash
-mkdir nd_fhc_data
-```
-
-we have to make sure the output directory is group writeable. This can be done using chmod as follows
-
-```bash
-chmod g+w ./nd_fhc_data/
-```
 
 ### Submitting to the grid
 
