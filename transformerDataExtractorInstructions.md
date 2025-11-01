@@ -361,6 +361,33 @@ To get an idea of the status of the jobs, you can run the following
 jobsub_q --user=$USER
 ```
 
+### Copying back files
+Once the grid job  has finished, the output files need to be copied back.
+This can be done with
+
+```bash
+cd /exp/nova/app/users/$USER/transformer
+cp -r /pnfs/nova/scratch/users/$USER/transformer/nd_fhc_data .
+```
+
+Then, you can copy the shell script that is used to both merge the csv files and then convert them into `.xz` format  which can be done with
+
+```bash
+cp /exp/nova/app/users/oneogi/transformeree_data_script/mprod6.1_OPAL/merge_csv.sh .
+```
+
+### Merging the outputs
+
+Before the script to merge the csv files can be run, it has to be made executable, which can be done with
+```bash
+chmod +x merge_csv.sh
+```
+
+Then, you can run the script with
+```bash
+./merge_csv.sh nd_fhc_data.csv.xz nd_fhc_data/dataset_*.csv
+```
+
 
 
 
