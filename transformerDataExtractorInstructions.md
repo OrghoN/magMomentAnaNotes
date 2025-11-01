@@ -272,6 +272,29 @@ testrel_tarball . ../transformerEE_data_extract
 
 This will create a file called `transformerEE_data_extract.tar.bz2` in the directory above the test release.
 
+###  Scratch area setup
+
+The grid does not have access to blue arc area i.e. `/exp`  .
+The tarball can ve sent to each of the worker nodes just fine, but the actual macro and output area needs to be in an area that the worker nodes can access.
+This will be in your scratch area, located in `/pnfs/nova/scratch/users/$USER`.
+The macro can be copied over and an output area created using the following commands.
+
+```bash
+cp /exp/nova/app/users/oneogi/transformeree_data_script/mprod6.1_OPAL/mprod6_exporter_transformer_ee_nd_fhc_nonswap.C /pnfs/nova/scratch/users/$USER/mprod6_exporter_transformer_ee_nd_fhc_nonswap.C
+mkdir -p /pnfs/nova/scratch/users/$USER/transformer/nd_fhc_data
+```
+
+Not only does an output directory need to be created, the group of worker nodes also need to have write permissions  to the output directory.
+This can be achieved by the following.
+
+```bash
+chmod g+w /pnfs/nova/scratch/users/$USER/transformer/nd_fhc_data
+```
+
+The output directory can be named anything, the above is just an example, just make sure that the directory you create is the same as the one you point to when submitting the job to the grid.
+
+
+
 ### Location of Macros
 
 A full suite of macros for extracting data for both the near and far detector  can be found at
