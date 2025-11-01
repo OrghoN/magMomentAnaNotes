@@ -388,6 +388,8 @@ Then, you can run the script with
 ./merge_csv.sh nd_fhc_data.csv.xz nd_fhc_data/dataset_*.csv
 ```
 
+This will result in one file that can be used for the purposes of training the model. The example used in this guide is for the near detector with forward horn current, but it can be adapted for use with either the near detector or the far detector and with either forward or reverse horn current by simply changing which macro is submitted to the grid.
+
 
 
 
