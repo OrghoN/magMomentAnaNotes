@@ -121,7 +121,36 @@ To use:
     Go to https://analytics-hub.fnal.gov and select "Start My Server" if one is not already running. 
     Run eaf-ssh.sh - it will prompt you for the password that you encrypted the token with, and then you should have CLI access to your server.
 
-## References
+### EAF Quickstart
+
+Generate Token at
+
+```
+https://analytics-hub.fnal.gov/hub/token
+```
+
+Encrypt token by
+
+```bash
+cd eaf-ssh
+export PATH=/nashome/o/oneogi/eaf-ssh:$PATH
+./encrypt_token.sh
+cp ~/eaf-token.enc .
+```
+
+Start server at
+
+```
+https://analytics-hub.fnal.gov
+```
+
+ssh into eaf by
+
+```bash
+./eaf-ssh.sh
+```
+
+	## References
 
 - citeturn0search0 – [Building an Elastic Analysis Facility with Kubernetes – Maria P.
 Acosta (PDF)](https://indico.cern.ch/event/896935/contributions/3782797/attachments/2004968/3348249/Acosta_EF_K8s_jointCMS-ATLAS.pdf)
