@@ -68,6 +68,8 @@ There are more detailed instructions on the conda configuration at the [readme f
 
 ```bash
 conda create --name transformer_ee
+conda init bash
+source ~/.bashrc
 conda activate transformer_ee
 conda install pytorch torchvision torchaudio pytorch-cuda=12.1 -c pytorch -c nvidia
 conda install scipy pandas polars numpy matplotlib
