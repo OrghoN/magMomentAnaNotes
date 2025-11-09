@@ -23,3 +23,53 @@ export USER=oneogi
 
 You should not need to do this step since the `$USER` variable will be pointing to your username by default.
 
+### Cloning the repository
+
+The Original transformer_ee repository  can be found [here.](https://github.com/wswxyq/transformer_EE)
+For the purposes of this guide, I will be using [my fork of transformer_ee.](https://github.com/OrghoN/transformer_ee)
+
+This is because the default example code probided in the original is meant for training over DUNE data, whereas my fork is for training over Nova data.
+
+The first step is to navigate to the directory we will be working in.
+
+```bash
+cd /exp/nova/app/users/$USER/transformer
+```
+
+Next we clone the repository using
+
+```bash
+# ssh path
+git clone git@github.com:OrghoN/transformer_ee.git
+# https path
+git clone https://github.com/OrghoN/transformer_ee
+```
+
+The ssh path is recommended due to both security and convenience reasons.
+This requires ssh keys to be setup with github and a tutorial on this setup can be found [here.](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account)
+Tutorial on forwarding ssh-keys can be found [here.](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/using-ssh-agent-forwarding)
+
+The next step is to add the upstream url that points to the original software repository
+
+```bash
+cd transformer_ee
+# ssh path
+git remote add upstream git@github.com:wswxyq/transformer_ee.git
+# https path
+git remote add upstream https://github.com/wswxyq/transformer_EE
+```
+
+Adding the upstream url allows for syncing between the fork and the upstream repository.
+More instructions about that can be found [here.](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/configuring-a-remote-repository-for-a-fork)
+
+### Configuring Conda
+
+There are more detailed instructions on the conda configuration at the [readme for the repository](https://github.com/OrghoN/transformer_ee) so I will just list the instructions without going into great detail about what they mean.
+
+```bash
+conda create --name transformer_ee
+conda activate transformer_ee
+conda install pytorch torchvision torchaudio pytorch-cuda=12.1 -c pytorch -c nvidia
+conda install scipy pandas polars numpy matplotlib
+```
+
