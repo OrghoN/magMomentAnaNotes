@@ -75,3 +75,8 @@ conda install pytorch torchvision torchaudio pytorch-cuda=12.1 -c pytorch -c nvi
 conda install scipy pandas polars numpy matplotlib
 ```
 
+The `conda init` instructions are necessary for EAF since conda isn't initialized by default.
+Once it has been initialized, the `.bashrc` or equivalent has to be sourced for it to kick in correctly.
+
+The creation of the environment or installation of the packages doesn't need to be done every time, but the environment does need to be activated every time you want to work on the repository.
+
