@@ -134,6 +134,9 @@ Encrypt token by
 ```bash
 cd eaf-ssh
 export PATH=/nashome/o/oneogi/eaf-ssh:$PATH
+# remove old tokens
+rm ~/eaf-token.enc
+rm eaf-token.enc
 ./encrypt_token.sh
 cp ~/eaf-token.enc .
 ```
