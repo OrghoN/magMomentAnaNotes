@@ -10,6 +10,23 @@ Training can of course be done on any system that has appropriate memory and GPU
 
 ## Quickstart
 
+Assuming you are running on eaf fife serer and have the data files in the default locations the following block of code should get things up and running.
+
+```bash
+cd /exp/nova/app/users/$USER/transformer
+git clone git@github.com:OrghoN/transformer_ee.git
+cd transformer_ee
+git remote add upstream git@github.com:wswxyq/transformer_ee.git
+conda create --name transformer_ee
+conda init bash
+source ~/.bashrc
+conda activate transformer_ee
+conda install pytorch torchvision torchaudio pytorch-cuda=12.1 -c pytorch -c nvidia
+conda install scipy pandas polars numpy matplotlib
+cp ../nd_fhc_data.csv.xz ./transformer_ee/data/nova/magMomentAna/nd_fhc_data.csv.xz
+python3 train_script_nova.py
+```
+
 ### ssh vs web access
 
 I am using EAF via ssh whereas you probably will be using it over the web browser.
@@ -79,4 +96,22 @@ The `conda init` instructions are necessary for EAF since conda isn't initialize
 Once it has been initialized, the `.bashrc` or equivalent has to be sourced for it to kick in correctly.
 
 The creation of the environment or installation of the packages doesn't need to be done every time, but the environment does need to be activated every time you want to work on the repository.
+
+### Copying data
+
+Once the conda environment has been setup, the training data needs to be copied to the `transformer_ee/data/nova` within the relevant subdirectory based on the config you are using.
+for our example, we can copy the ND FHC data using
+
+```bash
+cp ../nd_fhc_data.csv.xz ./transformer_ee/data/nova/magMomentAna/nd_fhc_data.csv.xz
+```
+
+### Running training script
+
+We are now ready to run the training script.
+
+This can be done with
+```bash
+python3 train_script_nova.py
+```
 
