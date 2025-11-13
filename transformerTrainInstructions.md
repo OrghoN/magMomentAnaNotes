@@ -24,7 +24,7 @@ conda activate transformer_ee
 conda install pytorch torchvision torchaudio pytorch-cuda=12.1 -c pytorch -c nvidia
 conda install scipy pandas polars numpy matplotlib
 cp ../nd_fhc_data.csv.xz ./transformer_ee/data/nova/magMomentAna/nd_fhc_data.csv.xz
-python3 train_script_nova.py
+nohup python3 train_script_nova.py &
 ```
 
 ### ssh vs web access
@@ -113,5 +113,13 @@ We are now ready to run the training script.
 This can be done with
 ```bash
 python3 train_script_nova.py
+```
+
+Because the training can take a while, it may be helpful to make sure it doesn't terminate simply because the connection to the local computer has been lost either because of timeout or because you simply did not want to keep your local computer running for that long. This can be accomplished in a number of ways such as screen or tmux, but for the purposes of this example, I will use nohup, mostly because it is the simplest of the bunch.
+If you run the following piece of code, it will relegate the training to the background and make sure it doesn't terminate on a logout.
+The `stdout` and `stderr` will be written out to a file called `nohup.out`.
+
+```bash
+nohup python3 train_script_nova.py &
 ```
 
