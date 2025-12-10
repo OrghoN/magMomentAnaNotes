@@ -7,27 +7,15 @@ This document compares the technical architectures, advantages, and disadvantage
 
 | Feature | CNN/CVN | LSTM | Transformer |
 | :--- | :--- | :--- | :--- |
-| **Primary Input Format** | Pixel-mapped views (2D images) of detector hits (e.g., XZ and YZ views). | Reconstructed features of sequential data (prongs, slices), where the number of prongs is variable.
-| Reconstructed features of sequential data (prongs, slices).
-|
-| **Core Mechanism** | Convolutional layers that extract spatial and feature information from images, followed by fully connected layers.
-| **Recurrent Structure** that processes sequential input $x_t$ based on the previous hidden state $h_{t-1}$.
-Utilizes a **memory cell** and **gating mechanisms** (input, forget, output gates).
-| **Self-Attention Mechanism** (introduced by Vaswani et al.) that processes and captures relationships between all elements in a sequence simultaneously.
-Typically uses a stack of encoder layers.
-|
-| **Handling of Sequence** | Not designed for sequence data; operates primarily on spatial locality in image data.
-| Sequential processing, where the current hidden state $h_t$ is updated based on $x_t$ and $h_{t-1}$.
-| Parallel processing of all input elements; sequence length is fixed by zero-padding or truncation during batch training (e.g., $Pmax=10$ prongs in NOvA).
-|
-| **Output** | Set of scores (probabilities) representing the event class (e.g., $νµ$ CC, NC, cosmic ray).
-| Predicts physical quantities, such as the energy of the incoming neutrino and the outgoing muon (for $νµ$ CC events).
-| Predicts various target quantities, including $νµ$ and muon energies.
-|
-| **Order Dependency** | N/A (Spatial inputs).
-| Highly order-dependent due to sequential processing.
-| **Order-invariant** because sum pooling is applied over the encoder outputs across the prong dimension, and positional encoding is not applied to prongs.
-|
+| **Primary Input Format** | Pixel-mapped views (2D images) of detector hits (e.g., XZ and YZ views). | Reconstructed features of sequential data (prongs, slices), where the number of prongs is variable. | Reconstructed features of sequential data (prongs, slices).|
+
+| **Core Mechanism** | Convolutional layers that extract spatial and feature information from images, followed by fully connected layers. | **Recurrent Structure** that processes sequential input $x_t$ based on the previous hidden state $h_{t-1}$.
+Utilizes a **memory cell** and **gating mechanisms** (input, forget, output gates). | **Self-Attention Mechanism** (introduced by Vaswani et al.) that processes and captures relationships between all elements in a sequence simultaneously.
+Typically uses a stack of encoder layers. |
+| **Handling of Sequence** | Not designed for sequence data; operates primarily on spatial locality in image data. | Sequential processing, where the current hidden state $h_t$ is updated based on $x_t$ and $h_{t-1}$. | Parallel processing of all input elements; sequence length is fixed by zero-padding or truncation during batch training (e.g., $Pmax=10$ prongs in NOvA). |
+| **Output** | Set of scores (probabilities) representing the event class (e.g., $νµ$ CC, NC, cosmic ray). | Predicts physical quantities, such as the energy of the incoming neutrino and the outgoing muon (for $νµ$ CC events). | Predicts various target quantities, including $νµ$ and muon energies. |
+| **Order Dependency** | N/A (Spatial inputs). | Highly order-dependent due to sequential processing.
+| **Order-invariant** because sum pooling is applied over the encoder outputs across the prong dimension, and positional encoding is not applied to prongs. |
 
 ### Technical Aspects
 
@@ -70,19 +58,11 @@ This application of sum pooling, combined with the lack of applied positional en
 
 | Model | Advantages | Disadvantages |
 | :--- | :--- | :--- |
-| **CNN/CVN** | Excellent for visual/spatial feature extraction; provides high-accuracy event classification.
-| Less effective for representing variable-length sequential data (like particle prongs).
-|
-| **LSTM** | Capable of learning both short-range and long-range dependencies better than standard RNNs due to gating mechanisms.
-Was the widely adopted architecture for sequential tasks.
-| Struggles with extremely long-range dependencies compared to Transformers.
-Prone to issues like the "Energy Crisis" (two-peak patterns observed in $νµ$ CC energy prediction).
-|
+| **CNN/CVN** | Excellent for visual/spatial feature extraction; provides high-accuracy event classification.| Less effective for representing variable-length sequential data (like particle prongs). |
+| **LSTM** | Capable of learning both short-range and long-range dependencies better than standard RNNs due to gating mechanisms. Was the widely adopted architecture for sequential tasks. | Struggles with extremely long-range dependencies compared to Transformers. Prone to issues like the "Energy Crisis" (two-peak patterns observed in $νµ$ CC energy prediction). |
 | **Transformer** | Highly effective at capturing **global relationships** and processing long sequences due to parallel self-attention.
 Performance tends to improve significantly with larger sequence lengths (many prongs).
-**Order-invariant** when used with sum pooling on prongs.
-| Requires input sequence length constraint (padding/truncation) for batch training.
-|
+**Order-invariant** when used with sum pooling on prongs. | Requires input sequence length constraint (padding/truncation) for batch training. |
 
 The idea that Transformers would replace LSTMs stems from the inherent advantages of the self-attention mechanism in capturing dependencies across sequential data and processing information in parallel, especially as datasets grow large.
 
