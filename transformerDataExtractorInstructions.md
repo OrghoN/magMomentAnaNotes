@@ -452,6 +452,67 @@ chmod +x merge_csv.sh
 ./merge_csv.sh nd_rhc_data.csv.xz nd_rhc_data/dataset_*.csv
 ```
 
+## magnetic moment reco Quickstart
+
+This section of the guide goes over  getting data extracted for use with transformer_ee for use with the magnetic moment analysis. It focuses on the prod 5.1 sample, specifically nuone_overlay.
+It is almost the same as the quickstart at the beginning, the macros and such have been changed to refer to the appropriately datasets.
+
+```bash
+source /cvmfs/nova.opensciencegrid.org/novasoft/slf7/novasoft/setup/setup_nova.sh
+spack load nova-grid-utils
+setup_fnal_security
+cd /exp/nova/app/users/$USER
+mkdir transformer_nu_e
+cd transformer_nu_e
+sl7-nova
+source /cvmfs/nova.opensciencegrid.org/novasoft/slf7/novasoft/setup/setup_nova.sh
+newrel -t development transformerEE_data_extract
+cd transformerEE_data_extract
+git checkout feature/wus_transformerEE_data_extract
+cp -r /exp/nova/app/users/oneogi/transformeree_data_script/ .
+srt_setup -a
+novasoft_build -t
+```
+
+The ND-FHC nuone_overlay macro can then be run interactively over 5 files for testing by using
+
+```bash
+cafe -bq -l 5 ./transformeree_data_script/mag_moment/mprod5_1_exporter_transformer_ee_nd_fhc_nuone_overlay.C
+```
+
+However, to run over the entire dataset, it is recommended to run it over the grid. The following code block shows the setup instructions for that.
+
+```bash
+testrel_tarball . ../transformerEE_data_extract
+cd ../
+cp /exp/nova/app/users/oneogi/transformeree_data_script/mag_moment/mprod5_1_exporter_transformer_ee_nd_fhc_nuone_overlay.C /pnfs/nova/scratch/users/$USER/mprod5_1_exporter_transformer_ee_nd_fhc_nuone_overlay.C
+mkdir -p /pnfs/nova/scratch/users/$USER/transformer/nd_Fhc_nuone_overlay_data
+chmod g+w /pnfs/nova/scratch/users/$USER/transformer/nd_Fhc_nuone_overlay_data
+exit
+```
+
+To actually submit the job, the following code can be run.
+It is split into multiple lines for visibility but the entire block should be copied at once unlike the last few blocks where each command is to be run one at a time.
+
+ ```bash
+submit_cafana.py -n 250 --print_jobsub \
+--rel development -o /pnfs/nova/scratch/users/$USER/transformer/nd_Fhc_nuone_overlay_data \
+--user_tarball ./transformerEE_data_extract.tar.bz2 \
+/pnfs/nova/scratch/users/$USER/mprod5_1_exporter_transformer_ee_nd_fhc_nuone_overlay.C
+```
+
+Once the jobs finish, you can merge the output csv files by the following commands
+
+```bash
+cd /exp/nova/app/users/$USER/transformer_nu_e
+cp -r /pnfs/nova/scratch/users/$USER/transformer/nd_Fhc_nuone_overlay_data .
+cp /exp/nova/app/users/oneogi/transformeree_data_script/mprod6.1_OPAL/merge_csv.sh .
+chmod +x merge_csv.sh
+./merge_csv.sh nd_Fhc_nuone_overlay_data nd_Fhc_nuone_overlay_data.csv.xz nd_Fhc_nuone_overlay_data/dataset_*.csv
+```
+
+
+
 
 
 
