@@ -504,11 +504,11 @@ submit_cafana.py -n 250 --print_jobsub \
 Once the jobs finish, you can merge the output csv files by the following commands
 
 ```bash
-cd /exp/nova/app/users/$USER/transformer_nu_e
+cd /exp/nova/app/users/$USER/transformerNuE
 cp -r /pnfs/nova/scratch/users/$USER/transformer/nd_Fhc_nuone_overlay_data .
 cp /exp/nova/app/users/oneogi/transformeree_data_script/mprod6.1_OPAL/merge_csv.sh .
 chmod +x merge_csv.sh
-./merge_csv.sh nd_Fhc_nuone_overlay_data nd_Fhc_nuone_overlay_data.csv.xz nd_Fhc_nuone_overlay_data/dataset_*.csv
+./merge_csv.sh nd_Fhc_nuone_overlay_data.csv.xz nd_Fhc_nuone_overlay_data/dataset_*.csv
 ```
 
 
