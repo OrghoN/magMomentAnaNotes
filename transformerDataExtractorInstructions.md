@@ -46,7 +46,8 @@ However, to run over the entire dataset, it is recommended to run it over the gr
 ```bash
 testrel_tarball . ../transformerEE_data_extract
 cd ../
-cp /exp/nova/app/users/oneogi/transformeree_data_script/mprod6.1_OPAL/mprod6_exporter_transformer_ee_nd_fhc_nonswap.C /pnfs/nova/scratch/users/$USER/mprod6_exporter_transformer_ee_nd_fhc_nonswap.C
+mkdir -p /pnfs/nova/scratch/users/$USER/transformeree_data_script/mprod6.1_OPAL
+cp /exp/nova/app/users/oneogi/transformeree_data_script/mprod6.1_OPAL/mprod6_exporter_transformer_ee_nd_fhc_nonswap.C /pnfs/nova/scratch/users/$USER/transformeree_data_script/mprod6.1_OPAL/mprod6_exporter_transformer_ee_nd_fhc_nonswap.C
 mkdir -p /pnfs/nova/scratch/users/$USER/transformer/nd_fhc_data
 chmod g+w /pnfs/nova/scratch/users/$USER/transformer/nd_fhc_data
 exit
@@ -59,7 +60,7 @@ It is split into multiple lines for visibility but the entire block should be co
 submit_cafana.py -n 250 --print_jobsub \
 --rel development -o /pnfs/nova/scratch/users/$USER/transformer/nd_fhc_data \
 --user_tarball ./transformerEE_data_extract.tar.bz2 \
-/pnfs/nova/scratch/users/$USER/mprod6_exporter_transformer_ee_nd_fhc_nonswap.C
+/pnfs/nova/scratch/users/$USER/transformeree_data_script/mprod6.1_OPAL/mprod6_exporter_transformer_ee_nd_fhc_nonswap.C
 ```
 
 Once the jobs finish, you can merge the output csv files by the following commands
@@ -352,7 +353,7 @@ An example of what the command can look like is shown in the following block of 
 This will not  give you the job logs for the job you submitted but rather one of the old jobs I did, assuming those files still exist.
 
 ```bash
-jobsub_fetchlog --jobid=27192183.0@jobsub05.fnal.gov --unzipdir=./jobLogs
+jobsub_fetchlog --jobid=30086221.0@jobsub05.fnal.gov --unzipdir=./jobLogs
 ```
 
 To get an idea of the status of the jobs, you can run the following
