@@ -281,7 +281,8 @@ This will be in your scratch area, located in `/pnfs/nova/scratch/users/$USER`.
 The macro can be copied over and an output area created using the following commands.
 
 ```bash
-cp /exp/nova/app/users/oneogi/transformeree_data_script/mprod6.1_OPAL/mprod6_exporter_transformer_ee_nd_fhc_nonswap.C /pnfs/nova/scratch/users/$USER/mprod6_exporter_transformer_ee_nd_fhc_nonswap.C
+mkdir -p /pnfs/nova/scratch/users/$USER/transformeree_data_script/mprod6.1_OPAL
+cp /exp/nova/app/users/oneogi/transformeree_data_script/mprod6.1_OPAL/mprod6_exporter_transformer_ee_nd_fhc_nonswap.C /pnfs/nova/scratch/users/$USER/transformeree_data_script/mprod6.1_OPAL/mprod6_exporter_transformer_ee_nd_fhc_nonswap.C
 mkdir -p /pnfs/nova/scratch/users/$USER/transformer/nd_fhc_data
 ```
 
@@ -334,7 +335,7 @@ It is split into multiple lines for visibility but the entire block should be co
 submit_cafana.py -n 250 --print_jobsub \
 --rel development -o /pnfs/nova/scratch/users/$USER/transformer/nd_fhc_data \
 --user_tarball ./transformerEE_data_extract.tar.bz2 \
-/pnfs/nova/scratch/users/$USER/mprod6_exporter_transformer_ee_nd_fhc_nonswap.C
+/pnfs/nova/scratch/users/$USER/transformeree_data_script/mprod6.1_OPAL/mprod6_exporter_transformer_ee_nd_fhc_nonswap.C
 ```
 
 ### Getting job logs
