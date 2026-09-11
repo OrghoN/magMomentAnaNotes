@@ -16,7 +16,8 @@ Assuming you are running on eaf fife serer and have the data files in the defaul
 cd /exp/nova/app/users/$USER/transformer
 git clone git@github.com:OrghoN/transformer_ee.git
 cd transformer_ee
-git remote add upstream git@github.com:wswxyq/transformer_ee.git
+git remote add upstream git@github.com:joshuabarrow221/transformer_ee.git
+git remote add upstream2 git@github.com:wswxyq/transformer_ee.git
 conda create --name transformer_ee
 conda init bash
 source ~/.bashrc
@@ -120,6 +121,28 @@ If you run the following piece of code, it will relegate the training to the bac
 The `stdout` and `stderr` will be written out to a file called `nohup.out`.
 
 ```bash
+nohup python3 train_script_nova.py &
+```
+
+## magnetic moment reco Quickstart
+
+This section focuses on training transformer_ee for use with the magnetic moment analysis.
+It focuses on the prod 5.1 sample, specifically nuone_overlay.
+
+It is almost the same as the quickstart at the beginning, the scripts and such have been changed to refer to the appropriate datasets.
+
+```bash
+cd /exp/nova/app/users/$USER/transformerNuE
+git clone git@github.com:OrghoN/transformer_ee.git
+cd transformer_ee
+git remote add upstream git@github.com:wswxyq/transformer_ee.git
+conda create --name transformer_ee
+conda init bash
+source ~/.bashrc
+conda activate transformer_ee
+conda install pytorch torchvision torchaudio pytorch-cuda=12.1 -c pytorch -c nvidia
+conda install scipy pandas polars numpy matplotlib
+cp ../nd_Fhc_nuone_overlay_data.csv.xz ./transformer_ee/data/nova/magMomentAna/nd_Fhc_nuone_overlay_data.csv.xz
 nohup python3 train_script_nova.py &
 ```
 
