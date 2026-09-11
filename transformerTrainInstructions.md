@@ -151,3 +151,75 @@ cp ../nd_Fhc_nuone_overlay_data.csv.xz ./transformer_ee/data/nova/magMomentAna/n
 nohup python3 train_script_nova.py &
 ```
 
+## magnetic moment reco Samples used
+
+ Monte Carlo samples are used to train the network on.
+ We are looking for a single low energy forward facing electron.
+ Both our signal and irreducible standard model background  is captured in enhanced nu-on-e sample.
+We also look at nu_e charged current (CC) meson exchange current (MEC) background.
+Other background is covered in nominal ND sample.
+The samweb definitions for these samples are as follows.
+
+### enhanced nu-on-e sample
+
+Nominal:
+
+```
+prod_caf_R20-11-25-prod5.1reco.g_nd_genie_N1810j0211a_nonswap_fhc_nova_v08_full_v1_nuone_overlay
+```
+
+Systematically Shifted:
+
+```
+prod_caf_R20-11-25-prod5.1reco.g_nd_genie_N1810j0211a_nonswap_fhc_nova_v08_full_calibup_v1_nuone_overlay
+prod_caf_R20-11-25-prod5.1reco.g_nd_genie_N1810j0211a_nonswap_fhc_nova_v08_full_calibdown_v1_nuone_overlay
+prod_caf_R20-11-25-prod5.1reco.g_nd_genie_N1810j0211a_nonswap_fhc_nova_v08_full_ckvup_v1_nuone_overlay
+prod_caf_R20-11-25-prod5.1reco.g_nd_genie_N1810j0211a_nonswap_fhc_nova_v08_full_ckvdown_v1_nuone_overlay
+prod_caf_R20-11-25-prod5.1reco.g_nd_genie_N1810j0211a_nonswap_fhc_nova_v08_full_lightlevelup_v1_nuone_overlay
+prod_caf_R20-11-25-prod5.1reco.g_nd_genie_N1810j0211a_nonswap_fhc_nova_v08_full_lightleveldown_v1_nuone_overlay
+```
+
+### nu_e CC and MEC Sample
+
+Nominal:
+
+```
+YiwenXiao_NueCCMEC_Single_NJobs7500_CAF_NonSwap_filematch
+```
+
+Systematically Shifted:
+
+```
+YiwenXiao_NueCCMEC_Single_NJobs7500_CAF_NonSwap_CalibUp_Combined_240124_filematch
+YiwenXiao_NueCCMEC_Single_NJobs7500_CAF_NonSwap_CalibDown_Combined_240124_filematch
+YiwenXiao_NueCCMEC_Single_NJobs7500_CAF_NonSwap_CkvUp_Combined_240124_filematch
+YiwenXiao_NueCCMEC_Single_NJobs7500_CAF_NonSwap_CkvDown_Combined_240124_filematch
+YiwenXiao_NueCCMEC_Single_NJobs7500_CAF_NonSwap_LLUp_Combined_240124_filematch
+YiwenXiao_NueCCMEC_Single_NJobs7500_CAF_NonSwap_LLDown_Combined_240124_filematch
+YiwenXiao_NueCCMEC_Single_NJobs7500_CAF_NonSwap_Aging_Combined_240124_filematch
+YiwenXiao_NueCCMEC_Single_NJobs7500_CAF_NonSwap_CalibShape_Combined_240124_filematch
+YiwenXiao_NueCCMEC_Single_NJobs7500_CAF_NonSwap_MCNP_Combined_240124_filematch
+```
+
+### ND background Sample
+
+Nominal:
+
+```
+prod_caf_R20-11-25-prod5.1reco.a_nd_genie_N1810j0211a_nonswap_fhc_nova_v08_full_v1
+```
+
+Systematically Shifted:
+
+```
+prod_caf_R20-11-25-prod5.1reco.e_nd_genie_N1810j0211a_nonswap_fhc_nova_v08_full_calibup_v1_batch2
+prod_caf_R20-11-25-prod5.1reco.e_nd_genie_N1810j0211a_nonswap_fhc_nova_v08_full_calibdown_v1_batch2
+prod_caf_R20-11-25-prod5.1reco.f_nd_genie_N1810j0211a_nonswap_fhc_nova_v08_full_detectorageing_v1_batch2
+prod_caf_R20-11-25-prod5.1reco.f_nd_genie_N1810j0211a_nonswap_fhc_nova_v08_full_ckvup_v1_batch2
+prod_caf_R20-11-25-prod5.1reco.f_nd_genie_N1810j0211a_nonswap_fhc_nova_v08_full_ckvdown_v1_batch2
+prod_caf_R20-11-25-prod5.1reco.g_nd_genie_N1810j0211a_nonswap_fhc_nova_v08_full_lightlevelup_v1_batch2
+prod_caf_R20-11-25-prod5.1reco.g_nd_genie_N1810j0211a_nonswap_fhc_nova_v08_full_lightleveldown_v1_batch2
+```
+
+
+
