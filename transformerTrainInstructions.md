@@ -68,13 +68,17 @@ This requires ssh keys to be setup with github and a tutorial on this setup can 
 Tutorial on forwarding ssh-keys can be found [here.](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/using-ssh-agent-forwarding)
 
 The next step is to add the upstream url that points to the original software repository
+There are two upstream repositories we need to add.  upstream2 is the original while upstream is a fork of upstream2. upstream is in more rapid development at the moment.
 
 ```bash
 cd transformer_ee
 # ssh path
+git remote add upstream git@github.com:joshuabarrow221/transformer_ee.git
+git remote add upstream2 git@github.com:wswxyq/transformer_ee.git
 git remote add upstream git@github.com:wswxyq/transformer_ee.git
 # https path
-git remote add upstream https://github.com/wswxyq/transformer_EE
+git remote add upstream https://github.com/joshuabarrow221/transformer_EE
+git remote add upstream2 https://github.com/wswxyq/transformer_EE
 ```
 
 Adding the upstream url allows for syncing between the fork and the upstream repository.
@@ -135,7 +139,8 @@ It is almost the same as the quickstart at the beginning, the scripts and such h
 cd /exp/nova/app/users/$USER/transformerNuE
 git clone git@github.com:OrghoN/transformer_ee.git
 cd transformer_ee
-git remote add upstream git@github.com:wswxyq/transformer_ee.git
+git remote add upstream git@github.com:joshuabarrow221/transformer_ee.git
+git remote add upstream2 git@github.com:wswxyq/transformer_ee.git
 conda create --name transformer_ee
 conda init bash
 source ~/.bashrc
