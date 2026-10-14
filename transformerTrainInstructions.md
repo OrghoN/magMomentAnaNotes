@@ -153,9 +153,9 @@ nohup python3 train_script_nova.py &
 
 ## magnetic moment reco Samples used
 
- Monte Carlo samples are used to train the network on.
- We are looking for a single low energy forward facing electron.
- Both our signal and irreducible standard model background  is captured in enhanced nu-on-e sample.
+Monte Carlo samples are used to train the network on.
+We are looking for a single low energy forward facing electron.
+Both our signal and irreducible standard model background  is captured in enhanced nu-on-e sample.
 We also look at nu_e charged current (CC) meson exchange current (MEC) background.
 Other background is covered in nominal ND sample.
 The samweb definitions for these samples are as follows.
