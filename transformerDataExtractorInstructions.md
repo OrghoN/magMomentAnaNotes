@@ -456,7 +456,7 @@ chmod +x merge_csv.sh
 
 ## magnetic moment reco Quickstart
 
-This section of the guide goes over  getting data extracted for use with transformer_ee for use with the magnetic moment analysis. It focuses on the prod 5.1 sample, specifically nuone_overlay.
+This section of the guide goes over  getting data extracted for use with transformer_ee for use with the magnetic moment analysis. It focuses on the prod 5.1 samples.
 It is almost the same as the quickstart at the beginning, the macros and such have been changed to refer to the appropriate datasets.
 
 ```bash
@@ -466,6 +466,9 @@ setup_fnal_security
 cd /exp/nova/app/users/$USER
 mkdir transformerNuE
 cd transformerNuE
+curl -Ls https://github.com/OrghoN/transformer_EE/archive/refs/heads/develop.zip -o /tmp/repo.zip
+unzip -q /tmp/repo.zip 'transformer_EE-develop/nova_data_extractor/*' -d /tmp/extract
+mv /tmp/extract/transformer_EE-develop/nova_data_extractor .
 sl7-nova
 source /cvmfs/nova.opensciencegrid.org/novasoft/slf7/novasoft/setup/setup_nova.sh
 newrel -t development transformerEE_data_extract
