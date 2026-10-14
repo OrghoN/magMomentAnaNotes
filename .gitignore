@@ -57,3 +57,6 @@ build/
 
 # emacs tmp removal
 *~
+
+#md intermediaries
+*\#*
