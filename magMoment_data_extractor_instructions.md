@@ -127,6 +127,7 @@ The macros can then be run interactively over 5 files for testing by using
 ```bash
 cafe -bq -l 5 ./nova_data_extractor/mag_moment/enhanced_nu_on_e_extractor.C
 cafe -bq -l 5 ./nova_data_extractor/mag_moment/nd_bg_extractor.C
+cafe -bq -l 5 ./nova_data_extractor/mag_moment/mec_extractor.C
 ```
 
 However, to run over the entire dataset, it is recommended to run it over the grid. The following code block shows the setup instructions for that.
@@ -146,16 +147,18 @@ Each of these scripts will submit grid jobs for one of the datasets.
  cd transformerEE_data_extract/nova_data_extractor/mag_moment/
  source ./enhanced_nu_on_e_grid_suvmit.sh
  source nd_bg_grid_submit.sh
+  source mec_grid_submit.sh
 ```
 
 Once the jobs finish, you can merge the output csv files by the following commands
 
 ```bash
 cd /exp/nova/app/users/$USER/transformerNuE
-cp -r /pnfs/nova/scratch/users/$USER/transformer/nd_Fhc_nuone_overlay_data .
-cp /exp/nova/app/users/oneogi/transformeree_data_script/mprod6.1_OPAL/merge_csv.sh .
+cp -r /pnfs/nova/scratch/users/$USER/transformer_ee_csv .
+cd transformer_ee_csv
+cp  ../nova_data_extractor/merge_csv.sh .
 chmod +x merge_csv.sh
-./merge_csv.sh nd_Fhc_nuone_overlay_data.csv.xz nd_Fhc_nuone_overlay_data/dataset_*.csv
+./merge_csv.sh mag_moment_data.csv.xz mag_moment_data/enhanced_nu-on-e_data/nominal/dataset_*.csv mag_moment_data/nd_background_data/nominal/dataset_*.csv mag_moment_data/nu_e_cc_data/nominal/dataset_*.csv
 ```
 
 
