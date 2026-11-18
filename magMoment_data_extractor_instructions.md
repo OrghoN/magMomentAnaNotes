@@ -143,8 +143,9 @@ To actually submit the job, the following code can be run.
 Each of these scripts will submit grid jobs for one of the datasets.
 
  ```bash
- cd nova_data_extractor/mag_moment/
+ cd transformerEE_data_extract/nova_data_extractor/mag_moment/
  source ./enhanced_nu_on_e_grid_suvmit.sh
+ source nd_bg_grid_submit.sh
 ```
 
 Once the jobs finish, you can merge the output csv files by the following commands
