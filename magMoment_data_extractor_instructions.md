@@ -122,10 +122,10 @@ srt_setup -a
 novasoft_build -t
 ```
 
-The ND-FHC nuone_overlay macro can then be run interactively over 5 files for testing by using
+The nu-on-e_overlay macro can then be run interactively over 5 files for testing by using
 
 ```bash
-cafe -bq -l 5 ./nova_data_extractor/mag_moment/enhanced_nu-on-e/nominal/mprod6_exporter_transformer_ee_nd_fhc_nonswap.C
+cafe -bq -l 5 ./nova_data_extractor/mag_moment/enhanced_nu_on_e_extractor.C
 ```
 
 If you want to test all the datasets interactively, you can run the following script
