@@ -122,16 +122,11 @@ srt_setup -a
 novasoft_build -t
 ```
 
-The nu-on-e_overlay macro can then be run interactively over 5 files for testing by using
+The macros can then be run interactively over 5 files for testing by using
 
 ```bash
 cafe -bq -l 5 ./nova_data_extractor/mag_moment/enhanced_nu_on_e_extractor.C
-```
-
-If you want to test all the datasets interactively, you can run the following script
-
-```bash
-source ./nova_data_extractor/mag_moment/test.bash
+cafe -bq -l 5 ./nova_data_extractor/mag_moment/nd_bg_extractor.C
 ```
 
 However, to run over the entire dataset, it is recommended to run it over the grid. The following code block shows the setup instructions for that.
@@ -148,18 +143,8 @@ To actually submit the job, the following code can be run.
 Each of these scripts will submit grid jobs for one of the datasets.
 
  ```bash
- cd nova_data_extractor/mag_moment/enhanced_nu-on-e/nominal/
- source ./grid.sh
- cd ../systematically_shifted
- source ./grid.sh
- cd ../../nd_background/nominal
-  source ./grid.sh
- cd ../systematically_shifted
- source ./grid.sh
- cd ../../nu_e_cc/nominal
-   source ./grid.sh
- cd ../systematically_shifted
- source ./grid.sh
+ cd nova_data_extractor/mag_moment/
+ source ./enhanced_nu_on_e_grid_suvmit.sh
 ```
 
 Once the jobs finish, you can merge the output csv files by the following commands
