@@ -295,15 +295,6 @@ source /cvmfs/nova.opensciencegrid.org/novasoft/slf7/novasoft/setup/setup_nova.s
 
 ### Setting up new release
 
-I would strongly recommend creating a new directory for organizing the code discussed in this document and then `cd` into it.
-This will keep all the code in a subdirectory instead of pollutin your main working directory.
-This can be done using the following commands assuming you want to call this directory transformer but the actual name doesn't matter, feel free to call it something else.
-
-```bash
-mkdir transformer
-cd transformer
-```
-
 In the future, the code for extraction will be merged into the main branch  but for now we still need to set up a custom test release.
 
 ```bash
@@ -327,15 +318,15 @@ The main branch of transformer_ee does not have the code required for extraction
 git checkout feature/wus_transformerEE_data_extract
 ```
 
-### Building the test release
+### Putting the macros in the release
 
-For testing purposes, it might be helpful to copy the macros that we wish to run over to this test release.
-This does not affect submission to the grid.
-If you have no desire to run these macros interactively, it is totally okay to not copy this directory over.
+Right now the macros are one level up and we need them in the release to use them interactively. We can do this with
 
 ```bash
-cp -r /exp/nova/app/users/oneogi/transformeree_data_script/ .
+cp -r /exp/nova/app/users/$USER/transformerNuE/nova_data_extractor .
 ```
+
+### Building the test release
 
 Then we can run setup using 
 
@@ -360,14 +351,16 @@ Every time the code is changed, it needs to be rebuilt using the above command.
 It can be helpful to run the macro interactively before sending it to the grid  to make sure things are setup correctly thus far. Running over all the files will take a long time interactively so it is recommended to run over a small number of files. This can be done using the following command.
 
 ```bash
-cafe -bq -l 5 ./transformeree_data_script/mprod6.1_OPAL/mprod6_exporter_transformer_ee_nd_fhc_nonswap.C
+cafe -bq -l 5 ./nova_data_extractor/mag_moment/enhanced_nu_on_e_extractor.C
+cafe -bq -l 5 ./nova_data_extractor/mag_moment/nd_bg_extractor.C
+cafe -bq -l 5 ./nova_data_extractor/mag_moment/mec_extractor.C
 ```
 
 The `-b` flag indicates that cafe `cafe` is being run in batch mode.
 The `-q` flag tells `cafe` to quit once it has finished running.
 The `-b` and `-q` flags can be combined by calling the `-bq` flag.
 The `-l` flag takes one argument which tells it how many files to run over.
-The above example runs over 5 files.
+The above examples run over 5 files.
 
 ### Tarring up the test release
 
@@ -398,27 +391,12 @@ This will be in your scratch area, located in `/pnfs/nova/scratch/users/$USER`.
 The macro can be copied over and an output area created using the following commands.
 
 ```bash
-mkdir -p /pnfs/nova/scratch/users/$USER/transformeree_data_script/mprod6.1_OPAL
-cp /exp/nova/app/users/oneogi/transformeree_data_script/mprod6.1_OPAL/mprod6_exporter_transformer_ee_nd_fhc_nonswap.C /pnfs/nova/scratch/users/$USER/transformeree_data_script/mprod6.1_OPAL/mprod6_exporter_transformer_ee_nd_fhc_nonswap.C
-mkdir -p /pnfs/nova/scratch/users/$USER/transformer/nd_fhc_data
-```
-
-Not only does an output directory need to be created, the group of worker nodes also need to have write permissions  to the output directory.
-This can be achieved by the following.
-
-```bash
-chmod g+w /pnfs/nova/scratch/users/$USER/transformer/nd_fhc_data
+cd ../
+cp -r /exp/nova/app/users/$USER/transformerNuE/nova_data_extractor /pnfs/nova/scratch/users/$USER/
+source /exp/nova/app/users/$USER/transformerNuE/nova_data_extractor/mag_moment/createCsvOutDir.sh 
 ```
 
 The output directory can be named anything, the above is just an example, just make sure that the directory you create is the same as the one you point to when submitting the job to the grid.
-
-### Location of Macros
-
-A full suite of macros for extracting data for both the near and far detector  can be found at
-
-```bash
-/exp/nova/app/users/oneogi/transformeree_data_script
-```
 
 ### Submitting to the grid
 
@@ -446,13 +424,13 @@ Where
 - `<MACRO_PATH>` is to be replaced by the path to the macro you wish to run
 
 For the purposes of our example, this can be accomplished by running the following block.
-It is split into multiple lines for visibility but the entire block should be copied at once unlike the last few blocks where each command is to be run one at a time.
+Each of these scripts will submit grid jobs for one of the datasets.
 
  ```bash
-submit_cafana.py -n 250 --print_jobsub \
---rel development -o /pnfs/nova/scratch/users/$USER/transformer/nd_fhc_data \
---user_tarball ./transformerEE_data_extract.tar.bz2 \
-/pnfs/nova/scratch/users/$USER/transformeree_data_script/mprod6.1_OPAL/mprod6_exporter_transformer_ee_nd_fhc_nonswap.C
+  cd transformerEE_data_extract/nova_data_extractor/mag_moment/
+ source ./enhanced_nu_on_e_grid_suvmit.sh
+ source ./nd_bg_grid_submit.sh
+  source ./mec_grid_submit.sh
 ```
 
 ### Getting job logs
@@ -485,14 +463,16 @@ Once the grid job  has finished, the output files need to be copied back.
 This can be done with
 
 ```bash
-cd /exp/nova/app/users/$USER/transformer
-cp -r /pnfs/nova/scratch/users/$USER/transformer/nd_fhc_data .
+cd /exp/nova/app/users/$USER/transformerNuE
+cp -r /pnfs/nova/scratch/users/$USER/transformer_ee_csv .
 ```
 
-Then, you can copy the shell script that is used to both merge the csv files and then convert them into `.xz` format  which can be done with
+Then, you can copy the shell script that is used to merge the csv files and then convert them into `.xz` format  which can be done with
 
 ```bash
-cp /exp/nova/app/users/oneogi/transformeree_data_script/mprod6.1_OPAL/merge_csv.sh .
+cd transformer_ee_csv
+cp  ../nova_data_extractor/merge_csv.sh .
+
 ```
 
 ### Merging the outputs
@@ -504,7 +484,7 @@ chmod +x merge_csv.sh
 
 Then, you can run the script with
 ```bash
-./merge_csv.sh nd_fhc_data.csv.xz nd_fhc_data/dataset_*.csv
+./merge_csv.sh mag_moment_data.csv.xz mag_moment_data/enhanced_nu-on-e_data/nominal/dataset_*.csv mag_moment_data/nd_background_data/nominal/dataset_*.csv mag_moment_data/nu_e_cc_data/nominal/dataset_*.csv
 ```
 
 This will result in one file that can be used for the purposes of training the model.
