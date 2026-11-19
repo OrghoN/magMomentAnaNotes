@@ -9,8 +9,11 @@ This note compares two event selections:
   `enhanced_nu_on_e_extractor.C` (signal), `nd_bg_extractor.C` (nominal ND background) and
   `mec_extractor.C` (νe CC MEC background).
 
-The three macros have **identical reco selections** (`kTrainingSelection`. (Section 3). So one comparison
-covers all three.
+The three macros have **identical reco selections** (`kTrainingSelection`). They differ only in their truth requirement and input dataset. So one
+comparison covers all three.
+
+References written "tech note §N" are to sections of the tech note. A bare "§N" is a section
+of this document.
 
 Library values are quoted from `CAFAna/Cuts/NuoneCuts.h` in the `development` release on
 CVMFS. These are the ND ν-on-e group's cuts. The tech note's "originally" values are the same
@@ -31,7 +34,7 @@ numbers.
 | 7 | closestSlc | `ktimeCut` | −25 < Δt < 25 ns rejected | `nuone::ktimeCut` | same |
 | 8 | fiducial | Table 7 box | min (−185, −175, 95), max (175, 175, 1095) cm | `nuone::knuoneFiducial` | same (values checked) |
 | 9 | containment | Table 7 box | min (−190, −180, 105), max (180, 190, 1275) cm | `nuone::kcontainment` | same (values checked) |
-| 10 | showerEFrac | > 0.8 | **> 0.8** | > 0.5 | looser (lower edge of the §4.2 validation region) |
+| 10 | showerEFrac | > 0.8 | **> 0.8** | > 0.5 | looser (lower edge of the tech note §4.2 validation region) |
 | 11 | vtxE | < 0.02 GeV | **< 0.016 GeV** | < 0.05 GeV | looser, and also looser than the ND value |
 | 12 | gap | < 20 cm | **< 10 cm** | < 20 cm | looser (back to ND value) |
 | 13 | showerE | 0.5–5 GeV | **0.3–5 GeV** | 0.1–10 GeV | looser at both ends |
@@ -139,13 +142,13 @@ for four reasons.
   as a possible improvement (lines 275–278). If the training sample does not depend on the CNN
   scores, the energy model stays valid when the CNNs change.
 * **The tech note's own control regions drop these cuts.**
-  * The low-energy data/MC validation (§4.2) inverts the cut to 0.5 < showerEFrac < 0.8, and
+  * The low-energy data/MC validation (tech note §4.2) inverts the cut to 0.5 < showerEFrac < 0.8, and
     drops the CNN and eth2 cuts.
-  * The Eθ² sideband study (§5, lines 411–415) drops the CNN cuts.
+  * The Eθ² sideband study (tech note §5, lines 411–415) drops the CNN cuts.
 
   An energy estimator that will be checked or used in these regions has to be trained on
   events that populate them. The training cut showerEFrac > 0.5 is set to the lower edge of
-  the §4.2 validation region for exactly this reason. So the model can be checked against
+  the tech note §4.2 validation region for exactly this reason. So the model can be checked against
   data in a region that has no signal, before anyone looks at the signal region.
 * **Background events have to be in training.** Every event that passes the final selection
   gets an energy estimate, backgrounds included. The training sample must contain the
@@ -160,7 +163,7 @@ value (`NuoneCuts.h`). The tech note calls these the "original" values and only 
 on FOM grounds (Figs. 4–6 and 8). These values belong to an established selection that the ND
 and LDM groups use and have validated against data. They are not arbitrary. The tech note
 itself says the tightening was a sensitivity optimisation, and that the sideband and low-energy
-studies show no new data/MC problems from the changes (§5.3, lines 434–445).
+studies show no new data/MC problems from the changes (tech note §5.3, lines 434–445).
 
 Training on the ND-group preselection therefore gives one model that can be used with either
 cutflow. It also means that any future re-optimisation of these four FOM-driven thresholds
@@ -191,6 +194,8 @@ event is measurable.**
 
 ## 3. Consequences and things to check
 
+1. **Report performance on `passAnaFull == 1`.** Resolution and bias numbers for the analysis
+   must come from the analysis selection, not from the training selection. `passAnaPresel` and
    the eth2 sideband (0.005 ≤ `etheta2` < 0.04) give more evaluation regions.
 2. **The training prior is not the analysis prior.** A regressor learns roughly
    E[true | reco] under the training population. The loose sample has a different energy
@@ -199,7 +204,6 @@ event is measurable.**
    Check the bias in the `passAnaFull` subset as a function of true energy, especially in
    0.3–0.5 GeV. If the bias there is significant, consider reweighting or fine-tuning on the
    analysis-like subset.
-   population with very different energy response.
 3. **The three macros must keep identical reco cuts.** Their CSVs are merged by column
    position, and the background and signal samples have to share one selection. Change any
    threshold in all three macros at once.
