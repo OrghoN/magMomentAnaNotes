@@ -263,7 +263,20 @@ After that we can cd into our project directory by
 cd transformerNuE
 ```
 
+### Data ExtractionScripts
 
+Since we need to convert the samples into csv files we need to grab the scripts that can do that.
+The most current version of them live on my fork of the transformer_ee and if you wish to modify them to suit your needs feel free to go there.
+For the purpose of this guide though we wont change the scripts and so don't need githuvs commits to back us up, especially since we only need one directory of the repository .
+
+So instead we will just download it directly using curl and then unpack and move them as necessary by
+```bash
+curl -Ls https://github.com/OrghoN/transformer_EE/archive/refs/heads/develop.zip -o /tmp/repo.zip
+unzip -q /tmp/repo.zip 'transformer_EE-develop/nova_data_extractor/*' -d /tmp/extract
+mv /tmp/extract/transformer_EE-develop/nova_data_extractor .
+```
+
+This will give us a directory of the macros we will need.
 ### Accessing sl7 nova container
 
 When novasoft was designed, it was supposed to run on scientific linux.
