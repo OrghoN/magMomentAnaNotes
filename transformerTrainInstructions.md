@@ -13,18 +13,19 @@ Training can of course be done on any system that has appropriate memory and GPU
 Assuming you are running on eaf fife serer and have the data files in the default locations the following block of code should get things up and running.
 
 ```bash
-cd /exp/nova/app/users/$USER/transformer
+cd /exp/nova/app/users/$USER/transformerNuE
 git clone git@github.com:OrghoN/transformer_ee.git
 cd transformer_ee
 git remote add upstream git@github.com:joshuabarrow221/transformer_ee.git
 git remote add upstream2 git@github.com:wswxyq/transformer_ee.git
+git checkout develop
 conda create --name transformer_ee
 conda init bash
 source ~/.bashrc
 conda activate transformer_ee
 conda install pytorch torchvision torchaudio pytorch-cuda=12.1 -c pytorch -c nvidia
 conda install scipy pandas polars numpy matplotlib
-cp ../nd_fhc_data.csv.xz ./transformer_ee/data/nova/magMomentAna/nd_fhc_data.csv.xz
+cp ../transformer_ee_csv/mag_moment_data.csv.xz ./transformer_ee/data/nova/magMomentAna/mag_moment_data.csv.xz
 nohup python3 train_script_nova.py &
 ```
 
