@@ -249,6 +249,21 @@ This initializes Git LFS in your global Git configuration, enabling LFS features
 
 The above command needs to be only run once, no need to run it upon starting every session.
 
+### Creating Project Directory
+
+It makes sense to create a directory to hold the entirety of this analysis.
+This can ve done with
+```bash
+mkdir transformerNuE
+```
+
+After that we can cd into our project directory by
+
+```bash
+cd transformerNuE
+```
+
+
 ### Accessing sl7 nova container
 
 When novasoft was designed, it was supposed to run on scientific linux.
