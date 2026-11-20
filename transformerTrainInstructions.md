@@ -11,8 +11,10 @@ Training can of course be done on any system that has appropriate memory and GPU
 ## Quickstart
 
 Assuming you are running on eaf fife serer and have the data files in the default locations the following block of code should get things up and running.
+This also assumes youre using zsh.
+If you are using a different shell such as bash, replace the parts that say zsh and replace them with bash.
 
-```bash
+```zsh
 cd /exp/nova/app/users/$USER/transformerNuE
 git clone git@github.com:OrghoN/transformer_ee.git
 cd transformer_ee
@@ -20,14 +22,16 @@ git remote add upstream git@github.com:joshuabarrow221/transformer_ee.git
 git remote add upstream2 git@github.com:wswxyq/transformer_ee.git
 git checkout develop
 conda create --name transformer_ee
-conda init bash
-source ~/.bashrc
+conda init zsh
+source ~/.zshrc
 conda activate transformer_ee
 conda install pytorch torchvision torchaudio pytorch-cuda=12.1 -c pytorch -c nvidia
 conda install scipy pandas polars numpy matplotlib
 cp ../transformer_ee_csv/mag_moment_data.csv.xz ./transformer_ee/data/nova/magMomentAna/mag_moment_data.csv.xz
 nohup python3 train_script_nova.py &
 ```
+
+
 
 ### ssh vs web access
 
@@ -88,11 +92,13 @@ More instructions about that can be found [here.](https://docs.github.com/en/pul
 ### Configuring Conda
 
 There are more detailed instructions on the conda configuration at the [readme for the repository](https://github.com/OrghoN/transformer_ee) so I will just list the instructions without going into great detail about what they mean.
+The following block assumes zsh is your shell.
+If youre using a different one like bash, change the references to zsh in the next block  to refer to your shell.
 
-```bash
+```zsh
 conda create --name transformer_ee
-conda init bash
-source ~/.bashrc
+conda init zssh
+source ~/.zshrc
 conda activate transformer_ee
 conda install pytorch torchvision torchaudio pytorch-cuda=12.1 -c pytorch -c nvidia
 conda install scipy pandas polars numpy matplotlib
@@ -106,10 +112,10 @@ The creation of the environment or installation of the packages doesn't need to 
 ### Copying data
 
 Once the conda environment has been setup, the training data needs to be copied to the `transformer_ee/data/nova` within the relevant subdirectory based on the config you are using.
-for our example, we can copy the ND FHC data using
+for our example, we can copy the magnetic moment data using
 
 ```bash
-cp ../nd_fhc_data.csv.xz ./transformer_ee/data/nova/magMomentAna/nd_fhc_data.csv.xz
+cp ../transformer_ee_csv/mag_moment_data.csv.xz ./transformer_ee/data/nova/magMomentAna/mag_moment_data.csv.xz
 ```
 
 ### Running training script
@@ -128,99 +134,4 @@ The `stdout` and `stderr` will be written out to a file called `nohup.out`.
 ```bash
 nohup python3 train_script_nova.py &
 ```
-
-## magnetic moment reco Quickstart
-
-This section focuses on training transformer_ee for use with the magnetic moment analysis.
-It focuses on the prod 5.1 sample, specifically nuone_overlay.
-
-It is almost the same as the quickstart at the beginning, the scripts and such have been changed to refer to the appropriate datasets.
-
-```bash
-cd /exp/nova/app/users/$USER/transformerNuE
-git clone git@github.com:OrghoN/transformer_ee.git
-cd transformer_ee
-git remote add upstream git@github.com:joshuabarrow221/transformer_ee.git
-git remote add upstream2 git@github.com:wswxyq/transformer_ee.git
-conda create --name transformer_ee
-conda init bash
-source ~/.bashrc
-conda activate transformer_ee
-conda install pytorch torchvision torchaudio pytorch-cuda=12.1 -c pytorch -c nvidia
-conda install scipy pandas polars numpy matplotlib
-cp ../nd_Fhc_nuone_overlay_data.csv.xz ./transformer_ee/data/nova/magMomentAna/nd_Fhc_nuone_overlay_data.csv.xz
-nohup python3 train_script_nova.py &
-```
-
-## magnetic moment reco Samples used
-
-Monte Carlo samples are used to train the network on.
-We are looking for a single low energy forward facing electron.
-Both our signal and irreducible standard model background  is captured in enhanced nu-on-e sample.
-We also look at nu_e charged current (CC) meson exchange current (MEC) background.
-Other background is covered in nominal ND sample.
-The samweb definitions for these samples are as follows.
-
-### enhanced nu-on-e sample
-
-Nominal:
-
-```
-prod_caf_R20-11-25-prod5.1reco.g_nd_genie_N1810j0211a_nonswap_fhc_nova_v08_full_v1_nuone_overlay
-```
-
-Systematically Shifted:
-
-```
-prod_caf_R20-11-25-prod5.1reco.g_nd_genie_N1810j0211a_nonswap_fhc_nova_v08_full_calibup_v1_nuone_overlay
-prod_caf_R20-11-25-prod5.1reco.g_nd_genie_N1810j0211a_nonswap_fhc_nova_v08_full_calibdown_v1_nuone_overlay
-prod_caf_R20-11-25-prod5.1reco.g_nd_genie_N1810j0211a_nonswap_fhc_nova_v08_full_ckvup_v1_nuone_overlay
-prod_caf_R20-11-25-prod5.1reco.g_nd_genie_N1810j0211a_nonswap_fhc_nova_v08_full_ckvdown_v1_nuone_overlay
-prod_caf_R20-11-25-prod5.1reco.g_nd_genie_N1810j0211a_nonswap_fhc_nova_v08_full_lightlevelup_v1_nuone_overlay
-prod_caf_R20-11-25-prod5.1reco.g_nd_genie_N1810j0211a_nonswap_fhc_nova_v08_full_lightleveldown_v1_nuone_overlay
-```
-
-### nu_e CC and MEC Sample
-
-Nominal:
-
-```
-YiwenXiao_NueCCMEC_Single_NJobs7500_CAF_NonSwap_filematch
-```
-
-Systematically Shifted:
-
-```
-YiwenXiao_NueCCMEC_Single_NJobs7500_CAF_NonSwap_CalibUp_Combined_240124_filematch
-YiwenXiao_NueCCMEC_Single_NJobs7500_CAF_NonSwap_CalibDown_Combined_240124_filematch
-YiwenXiao_NueCCMEC_Single_NJobs7500_CAF_NonSwap_CkvUp_Combined_240124_filematch
-YiwenXiao_NueCCMEC_Single_NJobs7500_CAF_NonSwap_CkvDown_Combined_240124_filematch
-YiwenXiao_NueCCMEC_Single_NJobs7500_CAF_NonSwap_LLUp_Combined_240124_filematch
-YiwenXiao_NueCCMEC_Single_NJobs7500_CAF_NonSwap_LLDown_Combined_240124_filematch
-YiwenXiao_NueCCMEC_Single_NJobs7500_CAF_NonSwap_Aging_Combined_240124_filematch
-YiwenXiao_NueCCMEC_Single_NJobs7500_CAF_NonSwap_CalibShape_Combined_240124_filematch
-YiwenXiao_NueCCMEC_Single_NJobs7500_CAF_NonSwap_MCNP_Combined_240124_filematch
-```
-
-### ND background Sample
-
-Nominal:
-
-```
-prod_caf_R20-11-25-prod5.1reco.a_nd_genie_N1810j0211a_nonswap_fhc_nova_v08_full_v1
-```
-
-Systematically Shifted:
-
-```
-prod_caf_R20-11-25-prod5.1reco.e_nd_genie_N1810j0211a_nonswap_fhc_nova_v08_full_calibup_v1_batch2
-prod_caf_R20-11-25-prod5.1reco.e_nd_genie_N1810j0211a_nonswap_fhc_nova_v08_full_calibdown_v1_batch2
-prod_caf_R20-11-25-prod5.1reco.f_nd_genie_N1810j0211a_nonswap_fhc_nova_v08_full_detectorageing_v1_batch2
-prod_caf_R20-11-25-prod5.1reco.f_nd_genie_N1810j0211a_nonswap_fhc_nova_v08_full_ckvup_v1_batch2
-prod_caf_R20-11-25-prod5.1reco.f_nd_genie_N1810j0211a_nonswap_fhc_nova_v08_full_ckvdown_v1_batch2
-prod_caf_R20-11-25-prod5.1reco.g_nd_genie_N1810j0211a_nonswap_fhc_nova_v08_full_lightlevelup_v1_batch2
-prod_caf_R20-11-25-prod5.1reco.g_nd_genie_N1810j0211a_nonswap_fhc_nova_v08_full_lightleveldown_v1_batch2
-```
-
-
 
