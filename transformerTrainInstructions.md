@@ -21,14 +21,12 @@ cd transformer_ee
 git remote add upstream git@github.com:joshuabarrow221/transformer_ee.git
 git remote add upstream2 git@github.com:wswxyq/transformer_ee.git
 git checkout develop
-conda create --name transformer_ee
 conda init zsh
 source ~/.zshrc
+conda env create -f environment.yml
 conda activate transformer_ee
-conda install pytorch torchvision torchaudio pytorch-cuda=12.1 -c pytorch -c nvidia
-conda install scipy pandas polars numpy matplotlib
 cp ../transformer_ee_csv/mag_moment_data.csv.xz ./transformer_ee/data/nova/magMomentAna/mag_moment_data.csv.xz
-nohup python3 train_script_nova.py &
+python -c "import torch, sys; sys.exit(0 if torch.cuda.is_available() else 'NO GPU VISIBLE - not starting')" && { nohup python -u train_script_nova.py > nohup.out 2>&1 & }
 ```
 
 
